@@ -5,11 +5,14 @@
 
 body {
   font-family: 'Lato', sans-serif;
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
+  background: linear-gradient(90deg, #a8dadc 10%, #f8f9fa 50%, #a8dadc 90%);
+
   color: var(--bs-primary-rbg);
   font-weight: 400;
   font-size: 1.2rem;
 }
+
 h1,
 h2,
 h3,
@@ -93,9 +96,44 @@ h6 {
   color: #333333;
 }
 
-.hero-eth{
+.hero-eth {
   font-family: 'Montserrat', sans-serif;
   align-items: center;
   margin-left: -15px;
   color: #333333;
+}
+@media (min-width: 1200px) {
+  .home {
+    background: url('../img/back-g4.png') left bottom no-repeat,
+      url('../img/backg5.png') right bottom no-repeat,
+      linear-gradient(90deg, #a8dadc 10%, #f8f9fa 50%, #a8dadc 90%);
+
+    background-size: 40%, 30%, cover;
+    background-blend-mode: normal;
+  }
+}
+/* Dashboard Styling */
+.search-bar {
+  max-width: 1000px !important;
+  border-radius: 15px;
+  margin: 0 auto;
+}
+
+.search-bar::placeholder {
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.search-bar:hover {
+  border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.custom-log {
+  margin-right: 10px;
 }

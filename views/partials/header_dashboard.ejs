@@ -1,0 +1,28 @@
+<header
+  class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+>
+  <a class="navbar-brand" href="/dashboard">
+    <img src="/img/logo.png" alt="" class="logo" />
+    <span class="eth">ETHER PAD</span>
+  </a>
+
+  <form
+    class="nav col-12 col-md-auto flex-fill mb-2 justify-content-center mb-md-0"
+    role="search"
+    method="POST"
+    action="/dashboard/search"
+  >
+    <input
+      type="search"
+      name="searchTerm"
+      class="form-control search-bar"
+      placeholder="Search...."
+      aria-label="Search"
+    />
+  </form>
+
+  <div class="col-md-3 text-end custom-log">
+    <a href="/logout" type="button" class="btn btn-outline-primary">Log out</a>
+  </div>
+</header>
+
