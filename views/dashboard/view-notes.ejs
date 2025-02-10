@@ -17,13 +17,15 @@
           id="deleteButton"
           data-id="<%= note._id %>"
           data-bs-target="#deleteModal"
-        >Delete</button>
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
 
   <form
-    action="/dashbord/item/<%= noteID %>?_method=PUT"
+    action="/dashboard/item/<%= noteID %>?_method=PUT"
     method="POST"
     class="position-relative"
   >
@@ -84,10 +86,12 @@
           Close
         </button>
 
-        <form action="/dashboard/item-delete/<%= noteID %>?_method=DELETE" method="POST">
+        <form
+          action="/dashboard/item-delete/<%= noteID %>?_method=DELETE"
+          method="POST"
+        >
           <button type="submit" class="btn btn-danger">Delete Note</button>
         </form>
-        
       </div>
     </div>
   </div>

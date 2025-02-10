@@ -24,7 +24,7 @@ exports.dashboard = async (req, res, next) => {
         },
       },
     ])
-      .skip(perPage * (page - 1)) // ✅ Now this will never be negative
+      .skip(perPage * (page - 1))
       .limit(perPage);
 
     const count = await Note.countDocuments();
@@ -60,7 +60,7 @@ exports.dashboardViewNote = async (req, res) => {
   }
 };
 
-//Uodate Specific note
+//Update Specific note
 exports.dashboardUpdateNote = async (req, res) => {
   try {
     await Note.findOneAndUpdate(

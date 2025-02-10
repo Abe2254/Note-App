@@ -1,4 +1,4 @@
-<header
+<!-- <header
   class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
 >
   <a class="navbar-brand" href="/dashboard">
@@ -24,5 +24,51 @@
   <div class="col-md-3 text-end custom-log">
     <a href="/logout" type="button" class="btn btn-outline-primary">Log out</a>
   </div>
-</header>
+</header>-->
+ 
+<nav class="navbar navbar-expand-md py-3 mb-4 border-bottom">
+  <div class="container-fluid">
+    
+    <a class="navbar-brand d-flex align-items-center" href="/dashboard">
+      <img src="/img/logo.png" alt="Logo" class="logo me-2" />
+      <span class="eth">ETHER PAD</span>
+    </a>
 
+    <!-- Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+   
+    <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+      <!-- Search Bar -->
+      <form
+        class="nav col-12 col-md-auto flex-fill mb-2 mb-md-0 d-flex justify-content-center"
+        role="search"
+        method="POST"
+        action="/dashboard/search"
+      >
+        <input
+          type="search"
+          name="searchTerm"
+          class="form-control search-bar"
+          placeholder="Search..."
+          aria-label="Search"
+        />
+      </form>
+
+      <!-- Logout Button -->
+      <div class="text-end custom-log">
+        <a href="/logout" class="btn btn-outline-primary">Log out</a>
+      </div>
+    </div>
+  </div>
+</nav>
