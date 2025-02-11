@@ -101,23 +101,23 @@ passport.deserializeUser(async function (id, done) {
 });
 
 //DAshboard route
-router.get('/dashboard', (req, res) => {
-  try {
-    console.log('Session Data:', req.session);
-    console.log('Passport Data:', req.session.passport);
-    console.log('User Data:', req.user);
+// router.get('/dashboard', (req, res) => {
+//   try {
+//     console.log('Session Data:', req.session);
+//     console.log('Passport Data:', req.session.passport);
+//     console.log('User Data:', req.user);
 
-    if (!req.session) return res.status(500).send('Session is not stored.');
-    if (!req.session.passport)
-      return res.status(500).send('Passport session missing.');
-    if (!req.user) return res.status(401).send('Access Denied - No User Found');
+//     if (!req.session) return res.status(500).send('Session is not stored.');
+//     if (!req.session.passport)
+//       return res.status(500).send('Passport session missing.');
+//     if (!req.user) return res.status(401).send('Access Denied - No User Found');
 
-    res.render('layouts/dashboard', { user: req.user });
-  } catch (error) {
-    console.error('Error rendering dashboard:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+//     res.render('layouts/dashboard', { user: req.user });
+//   } catch (error) {
+//     console.error('Error rendering dashboard:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 module.exports = router;
 
