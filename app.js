@@ -7,6 +7,8 @@ const connectDB = require('./server/config/db');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
+const path = require('path');
+
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
   console.error('Error: MONGO_URI environment variable is not set!');
@@ -21,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
+app.set('views', path.join(__dirname, 'views'));
 
 // Database connection
 connectDB();
