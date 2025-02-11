@@ -30,7 +30,7 @@ app.use(
   session({
     secret: "Call of Duty",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
     }),

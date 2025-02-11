@@ -3,13 +3,17 @@ const router = express.Router();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
-
+const callbackURL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://note-app-nyhh.onrender.com/google/callback'
+    : 'http://localhost:8000/google/callback';
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      callbackURL: callbackURL,
+      scope: ['profile', 'email'],
     },
     async function (accessToken, refreshToken, profile, done) {
       const newUser = {
@@ -18,6 +22,7 @@ passport.use(
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         profileImage: profile.photos[0].value,
+        email: profile.emails[0].value,
       };
       try {
         let user = await User.findOne({ googleId: profile.id });
@@ -35,7 +40,7 @@ passport.use(
   )
 );
 
-//GOogle Login Route
+//Google Login Route
 router.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile'] })
@@ -44,7 +49,7 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/login-failuure',
+    failureRedirect: '/login-failure',
     successRedirect: '/dashboard',
   })
 );
