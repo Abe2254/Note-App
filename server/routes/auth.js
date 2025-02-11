@@ -7,6 +7,7 @@ const callbackURL =
   process.env.NODE_ENV === 'production'
     ? 'https://note-app-nyhh.onrender.com/google/callback'
     : 'http://localhost:8000/google/callback';
+
 passport.use(
   new GoogleStrategy(
     {
@@ -16,29 +17,38 @@ passport.use(
       scope: ['profile', 'email'],
     },
     async function (accessToken, refreshToken, profile, done) {
-      const newUser = {
-        googleId: profile.id,
-        displayName: profile.displayName,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        profileImage: profile.photos[0].value,
-        email: profile.emails[0].value,
-      };
       try {
+        // Debugging: Log full profile data
+        console.log("Google Profile Data:", profile);
+
+        // Handle missing emails
+        const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
+
+        const newUser = {
+          googleId: profile.id,
+          displayName: profile.displayName,
+          firstName: profile.name?.givenName || "",
+          lastName: profile.name?.familyName || "",
+          profileImage: profile.photos?.[0]?.value || "",
+          email: email, // Allow null emails
+        };
+
         let user = await User.findOne({ googleId: profile.id });
 
         if (user) {
-          done(null, user);
+          return done(null, user);
         } else {
           user = await User.create(newUser);
-          done(null, user);
+          return done(null, user);
         }
       } catch (error) {
-        console.log(error);
+        console.error("Google Auth Error:", error);
+        return done(error, null);
       }
     }
   )
 );
+
 
 //Google Login Route
 router.get(
