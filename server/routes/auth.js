@@ -111,7 +111,7 @@ router.get('/dashboard', (req, res) => {
     return res.status(500).send('Passport session missing.');
   if (!req.user) return res.status(401).send('Access Denied - No User Found');
 
-  res.send('layouts/dashboard', { user: req.user });
+  res.render('layouts/dashboard', { user: req.user });
 });
 
 module.exports = router;
