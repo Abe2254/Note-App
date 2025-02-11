@@ -85,36 +85,35 @@ router.get('/logout', (req, res) => {
 
 //Persist user data after successful authentication
 passport.serializeUser(function (user, done) {
-  console.log("Serializing User ID:", user.id);
+  console.log('Serializing User ID:', user.id);
   done(null, user.id);
 });
 //Retrieve user data from session
 passport.deserializeUser(async function (id, done) {
   try {
     const user = await User.findById(id);
-    console.log("Deserializing User:", user);
+    console.log('Deserializing User:', user);
     done(null, user);
   } catch (err) {
-    console.error("Deserialization Error:", err);
+    console.error('Deserialization Error:', err);
     done(err, null);
   }
 });
 
 //DAshboard route
-router.get("/dashboard", (req, res) => {
-  console.log("Session Data:", req.session);
-  console.log("Passport Data:", req.session.passport);
-  console.log("User Data:", req.user);
+router.get('/dashboard', (req, res) => {
+  console.log('Session Data:', req.session);
+  console.log('Passport Data:', req.session.passport);
+  console.log('User Data:', req.user);
 
-  if (!req.session) return res.status(500).send("Session is not stored.");
-  if (!req.session.passport) return res.status(500).send("Passport session missing.");
-  if (!req.user) return res.status(401).send("Access Denied - No User Found");
+  if (!req.session) return res.status(500).send('Session is not stored.');
+  if (!req.session.passport)
+    return res.status(500).send('Passport session missing.');
+  if (!req.user) return res.status(401).send('Access Denied - No User Found');
 
-  res.send(`Welcome, ${req.user.displayName}`);
+  res.send('layouts/dashboard', { user: req.user });
 });
 
 module.exports = router;
-
-
 
 module.exports = router;
