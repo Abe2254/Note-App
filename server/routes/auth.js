@@ -19,17 +19,20 @@ passport.use(
     async function (accessToken, refreshToken, profile, done) {
       try {
         // Debugging: Log full profile data
-        console.log("Google Profile Data:", profile);
+        console.log('Google Profile Data:', profile);
 
         // Handle missing emails
-        const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
+        const email =
+          profile.emails && profile.emails.length > 0
+            ? profile.emails[0].value
+            : null;
 
         const newUser = {
           googleId: profile.id,
           displayName: profile.displayName,
-          firstName: profile.name?.givenName || "",
-          lastName: profile.name?.familyName || "",
-          profileImage: profile.photos?.[0]?.value || "",
+          firstName: profile.name?.givenName || '',
+          lastName: profile.name?.familyName || '',
+          profileImage: profile.photos?.[0]?.value || '',
           email: email, // Allow null emails
         };
 
@@ -42,18 +45,17 @@ passport.use(
           return done(null, user);
         }
       } catch (error) {
-        console.error("Google Auth Error:", error);
+        console.error('Google Auth Error:', error);
         return done(error, null);
       }
     }
   )
 );
 
-
 //Google Login Route
 router.get(
   '/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 router.get(
@@ -83,17 +85,36 @@ router.get('/logout', (req, res) => {
 
 //Persist user data after successful authentication
 passport.serializeUser(function (user, done) {
+  console.log("Serializing User ID:", user.id);
   done(null, user.id);
 });
-
 //Retrieve user data from session
 passport.deserializeUser(async function (id, done) {
   try {
-    const user = await User.findById(id); // Await the Promise
-    done(null, user); // Pass the user object
+    const user = await User.findById(id);
+    console.log("Deserializing User:", user);
+    done(null, user);
   } catch (err) {
-    done(err, null); // Handle errors
+    console.error("Deserialization Error:", err);
+    done(err, null);
   }
 });
+
+//DAshboard route
+router.get("/dashboard", (req, res) => {
+  console.log("Session Data:", req.session);
+  console.log("Passport Data:", req.session.passport);
+  console.log("User Data:", req.user);
+
+  if (!req.session) return res.status(500).send("Session is not stored.");
+  if (!req.session.passport) return res.status(500).send("Passport session missing.");
+  if (!req.user) return res.status(401).send("Access Denied - No User Found");
+
+  res.send(`Welcome, ${req.user.displayName}`);
+});
+
+module.exports = router;
+
+
 
 module.exports = router;
