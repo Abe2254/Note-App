@@ -34,7 +34,9 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
     }),
-    cookie: { maxAge: 3600000, secure: process.env.NODE_ENV === 'production' },
+    cookie: { maxAge: 3600000, secure: process.env.NODE_ENV === "production" ? true: false,
+      httponly: true
+    },
   })
 );
 
